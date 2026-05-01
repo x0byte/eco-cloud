@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 
+from app.routes.annotate import router as annotate_router
+from app.routes.predict import router as predict_router
+
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -18,6 +21,9 @@ def create_app() -> FastAPI:
     @app.get("/health")
     def health_check() -> dict[str, str]:
         return {"status": "ok"}
+
+    app.include_router(predict_router)
+    app.include_router(annotate_router)
 
     return app
 

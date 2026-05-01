@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudeco-api
+  namespace: cloudeco
+  labels:
+    app: cloudeco
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudeco
+  template:
+    metadata:
+      labels:
+        app: cloudeco
+    spec:
+      containers:
+        - name: cloudeco-api
+          image: hirunwe/cloudeco-wildfire:latest
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "1"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+              
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
