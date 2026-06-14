@@ -153,14 +153,14 @@ kubectl scale deployment cloudeco-api --replicas=8 -n cloudeco
 The deployed application is accessible at:
 
 ```text
-http://161.33.75.182:31142
+http://ipaddr:31142
 ```
 
 ### Public endpoints
 
-- Health: `http://161.33.75.182:31142/health`
-- Predict: `http://161.33.75.182:31142/api/predict`
-- Annotate: `http://161.33.75.182:31142/api/annotate`
+- Health: `http://ipaddr:31142/health`
+- Predict: `http://ipaddr:31142/api/predict`
+- Annotate: `http://ipaddr:31142/api/annotate`
 
 ---
 
@@ -184,7 +184,7 @@ payload = json.dumps({
 }).encode("utf-8")
 
 req = request.Request(
-    "http://161.33.75.182:31142/api/predict",
+    "http://ipaddr/api/predict",
     data=payload,
     headers={"Content-Type": "application/json"},
     method="POST"
@@ -197,29 +197,6 @@ with request.urlopen(req) as response:
 
 ---
 
-## Benchmarking
-
-Locust was used for benchmarking.
-
-Run Locust from the project root:
-
-```bash
-locust -f locustfile.py --host http://161.33.75.182:31142
-```
-
-Then open:
-
-```text
-http://127.0.0.1:8089
-```
-
-The main benchmark endpoint used was:
-
-```text
-/api/predict
-```
-
----
 
 ## Notes
 
@@ -246,4 +223,3 @@ This repository contains the implementation artefacts required for the assignmen
 ## Author
 
 **Hirun Weththewa**  
-**Student ID:** 35785365
